@@ -13,7 +13,8 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(999,"Lỗi 500, team backend nên xem lại logic",HttpStatus.INTERNAL_SERVER_ERROR),
     ERRORCODE_INVALID(998,"Điền sai errorcode rồi bạn",HttpStatus.BAD_REQUEST),
     ROLE_MIN_INVALID(997,"Số lượng ko được dưới 3 phần tử",HttpStatus.BAD_REQUEST),
-    DEPARTMENT_IS_NOT_EXISTED(996,"Không tồn tại trụ sở này",HttpStatus.BAD_REQUEST)
+    DEPARTMENT_IS_NOT_EXISTED(996,"Không tồn tại trụ sở này",HttpStatus.BAD_REQUEST),
+    EMPLOYEE_NOT_FOUND(1111,"kHÔNG TỒN TẠI NHÂN VIÊN NÀY",HttpStatus.BAD_REQUEST)
     ;
 
 
