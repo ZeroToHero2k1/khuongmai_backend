@@ -2,6 +2,7 @@ package com.zerotohero.khuongmaiapp.service;
 
 import com.zerotohero.khuongmaiapp.dto.request.RoleCURequest;
 import com.zerotohero.khuongmaiapp.entity.Role;
+import com.zerotohero.khuongmaiapp.entity.User;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
 import com.zerotohero.khuongmaiapp.repository.RoleRepository;
@@ -23,6 +24,9 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public Role createRole(RoleCURequest roleCURequest){
         if(roleRepository.existsByRoleName(roleCURequest.getRoleName())){
             throw new KMAppException(ErrorCode.ROLE_EXISTED);
@@ -39,6 +43,10 @@ public class RoleService {
 
 
     public void deleteRole(String id){
-        roleRepository.deleteById(id);
+        Role role=roleRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.ROLE_NOT_FOUND));
+        for(User user: role.getUsers()) {
+            user.setRole(null);
+        }
+        roleRepository.delete(role);
     }
 }

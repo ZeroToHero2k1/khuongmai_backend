@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class EmployeeResponse {
     private String name;
     private String phone;
-    private Department department;
+    private String departmentName;
     private LocalDate dateJoined;
     private Boolean status;
 }

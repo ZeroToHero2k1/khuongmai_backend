@@ -11,6 +11,18 @@ import org.mapstruct.MappingTarget;
 public interface EmployeeMapper {
     @Mapping(target = "department",ignore = true)
     Employee toEmployee(EmployeeCURequest request);
-    EmployeeResponse toEmployeeResponse(Employee employee);
+//    EmployeeResponse toEmployeeResponse(Employee employee);
     void updateEmployee(@MappingTarget Employee employee,EmployeeCURequest request);
+
+    default EmployeeResponse toEmployeeResponse(Employee employee){
+        if (employee==null) return null;
+        return EmployeeResponse.builder()
+                .name(employee.getName())
+                .phone(employee.getPhone())
+                .dateJoined(employee.getDateJoined())
+                .status(employee.getStatus())
+                .departmentName(employee.getDepartment().getName())
+                .build();
+
+    }
 }

@@ -3,6 +3,7 @@ package com.zerotohero.khuongmaiapp.service;
 import com.zerotohero.khuongmaiapp.dto.request.DepartmentRequest;
 import com.zerotohero.khuongmaiapp.dto.request.RoleCURequest;
 import com.zerotohero.khuongmaiapp.entity.Department;
+import com.zerotohero.khuongmaiapp.entity.Employee;
 import com.zerotohero.khuongmaiapp.entity.Role;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
@@ -38,7 +39,11 @@ public class DepartmentService {
     }
 
     public void deleteDepartment(String id){
-        departmentRepository.deleteById(id);
+        Department department=departmentRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.DEPARTMENT_IS_NOT_EXISTED));
+        for(Employee employee: department.getEmployeeList()){
+            employee.setDepartment(null);
+        }
+        departmentRepository.delete(department);
     }
 
     public Page<Department> getDepartments(String keyword, Pageable pageable){

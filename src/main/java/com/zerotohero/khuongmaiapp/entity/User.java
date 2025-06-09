@@ -1,9 +1,12 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "user")
+@Data
 public class User {
     @Id
     @Column(name = "user_id")
@@ -22,5 +25,6 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonIgnore
     private Role role;
 }

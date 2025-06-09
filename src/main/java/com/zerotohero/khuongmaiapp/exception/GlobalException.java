@@ -1,12 +1,14 @@
 package com.zerotohero.khuongmaiapp.exception;
 
 import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalException {
 
     @ExceptionHandler(value= KMAppException.class)
@@ -20,7 +22,8 @@ public class GlobalException {
     }
 
     @ExceptionHandler(value=Exception.class)
-    ResponseEntity<ApiResponse> handleRuntimeException(){
+    ResponseEntity<ApiResponse> handleRuntimeException(Exception e){
+        log.error("Lỗi hệ thống", e);
         ApiResponse apiResponse=new ApiResponse().builder()
                 .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessege())

@@ -2,6 +2,8 @@ package com.zerotohero.khuongmaiapp.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "material")
@@ -28,4 +30,8 @@ public class Material {
 
     @Column(name = "description")
     private String description;
+
+    // Quan hệ 1 material có nhiều ảnh
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MaterialImage> images = new ArrayList<>();
 }

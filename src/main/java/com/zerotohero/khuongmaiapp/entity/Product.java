@@ -1,11 +1,16 @@
 package com.zerotohero.khuongmaiapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "product")
+@Data
 public class Product {
     @Id
     @Column(name = "product_id")
@@ -24,10 +29,11 @@ public class Product {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    // Quan hệ 1 product có nhiều ảnh
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> images = new ArrayList<>();
 }

@@ -1,7 +1,11 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -19,4 +23,8 @@ public class Department {
 
     @Column(name = "department_name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Employee> employeeList=new ArrayList<>();
 }

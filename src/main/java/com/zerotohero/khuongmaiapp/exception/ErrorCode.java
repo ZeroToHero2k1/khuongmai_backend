@@ -9,12 +9,22 @@ import org.springframework.http.HttpStatusCode;
 @AllArgsConstructor
 public enum ErrorCode {
     ROLE_EXISTED(1001,"Đã tồn tại role này", HttpStatus.BAD_REQUEST),
+    CATEGORY_NAME_EXISTED(1001,"Đã tồn tại danh mục này", HttpStatus.BAD_REQUEST),
     DEPARTMENT_EXISTED(1002,"Đã tồn tại trụ sở này", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(999,"Lỗi 500, team backend nên xem lại logic",HttpStatus.INTERNAL_SERVER_ERROR),
     ERRORCODE_INVALID(998,"Điền sai errorcode rồi bạn",HttpStatus.BAD_REQUEST),
     ROLE_MIN_INVALID(997,"Số lượng ko được dưới 3 phần tử",HttpStatus.BAD_REQUEST),
     DEPARTMENT_IS_NOT_EXISTED(996,"Không tồn tại trụ sở này",HttpStatus.BAD_REQUEST),
-    EMPLOYEE_NOT_FOUND(1111,"kHÔNG TỒN TẠI NHÂN VIÊN NÀY",HttpStatus.BAD_REQUEST)
+    EMPLOYEE_NOT_FOUND(1111,"kHÔNG TỒN TẠI NHÂN VIÊN NÀY",HttpStatus.BAD_REQUEST),
+    ROLE_NOT_FOUND(1111,"kHÔNG TỒN TẠI QUYỀN NÀY",HttpStatus.BAD_REQUEST),
+    UNIQUE_ACCOUNT(1111,"Mỗi nhân viên chỉ được 1 tài khoản",HttpStatus.BAD_REQUEST),
+    UNIQUE_USERNAME(1111,"Username đã tồn tại",HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(1111,"kHÔNG TỒN TẠI USER NÀY",HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_FOUND(2222,"Category not found",HttpStatus.NOT_FOUND),
+    FILE_TOO_LARGE(1003,"File quas kích thước",HttpStatus.BAD_REQUEST),
+    FILE_EXTENSION_INVALID(1004,"Đuôi file không hợp lệ",HttpStatus.BAD_REQUEST),
+    THIS_IS_NOT_IMAGE(1005,"Đây không phải là file ảnh",HttpStatus.BAD_REQUEST),
+    PRODUCT_NOT_FOUND(1234,"Không tồn tại product",HttpStatus.NOT_FOUND)
     ;
 
 
