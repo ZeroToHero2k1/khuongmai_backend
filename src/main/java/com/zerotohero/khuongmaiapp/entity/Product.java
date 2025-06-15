@@ -1,5 +1,6 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,8 +30,9 @@ public class Product {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY) // Hoặc EAGER nếu cần thiết
+    @JoinColumn(name = "category_id", nullable = false) // Tên cột khóa ngoại
+    @JsonBackReference
     private Category category;
 
     // Quan hệ 1 product có nhiều ảnh

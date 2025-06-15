@@ -1,9 +1,11 @@
 package com.zerotohero.khuongmaiapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "warehouse")
+@Data
 public class Warehouse {
     @Id
     @Column(name = "warehouse_id")

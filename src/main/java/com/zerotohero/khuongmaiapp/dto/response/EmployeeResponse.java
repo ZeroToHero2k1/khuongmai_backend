@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Builder
 @Valid
 public class EmployeeResponse {
+    private String id;
     private String name;
     private String phone;
     private String departmentName;

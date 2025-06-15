@@ -1,6 +1,7 @@
 package com.zerotohero.khuongmaiapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     private List<Product> productList=new ArrayList<>();
 
 }

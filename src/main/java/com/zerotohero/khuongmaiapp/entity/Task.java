@@ -1,11 +1,13 @@
 package com.zerotohero.khuongmaiapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "task")
+@Data
 public class Task {
     @Id
     @Column(name = "task_id")

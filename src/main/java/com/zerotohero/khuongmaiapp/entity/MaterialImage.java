@@ -1,5 +1,6 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class MaterialImage {
     // Nhiều ảnh thuộc về 1 material
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "material_id")
+    @JsonIgnore
     private Material material;
 }

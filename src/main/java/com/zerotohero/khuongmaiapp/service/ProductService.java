@@ -15,6 +15,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -99,6 +101,30 @@ public class ProductService {
                 productImageRepository.save(productImage);
             }
         }
+        return productMapper.toProductResponse(product);
+    }
+
+    public void deleteProduct(String id) throws IOException {
+        Product product= productRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.PRODUCT_NOT_FOUND));
+        List<ProductImage> productImageList=productImageRepository.findAllByProduct(product);
+        for(ProductImage productImage:productImageList){
+            String imageUrl = productImage.getImageUrl();
+            int dotIndex = imageUrl.lastIndexOf('.');
+            int startIndex = imageUrl.indexOf("khuongmaiimg/");
+            String publicId = imageUrl.substring(startIndex, dotIndex);
+            cloudinaryService.deleteFile(publicId);
+            productImageRepository.delete(productImage);
+        }
+        productRepository.delete(product);
+    }
+
+    public Page<ProductResponse> searchProducts(String keyword, Pageable pageable){
+        Page<Product> productPage = productRepository.searchProduct(keyword,pageable);
+        return productPage.map(productMapper::toProductResponse);
+    }
+
+    public ProductResponse findProductById(String id){
+        Product product=productRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.PRODUCT_NOT_FOUND));
         return productMapper.toProductResponse(product);
     }
 }

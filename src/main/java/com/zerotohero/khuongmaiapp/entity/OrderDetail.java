@@ -1,10 +1,13 @@
 package com.zerotohero.khuongmaiapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "orderdetail")
+@Data
 public class OrderDetail {
     @Id
     @Column(name = "order_detail_id")

@@ -17,11 +17,13 @@ public interface ProductMapper {
     default ProductResponse toProductResponse(Product product){
         if(product==null) return null;
         return ProductResponse.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .color(product.getColor())
                 .size(product.getSize())
                 .unitPrice(product.getUnitPrice())
                 .categoryName(product.getCategory().getName())
+                .productImageList(product.getImages())
                 .build();
     }
 }

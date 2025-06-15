@@ -1,5 +1,7 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +24,9 @@ public class Employee {
     @Column(name = "employee_phone", nullable = false)
     private String phone;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
 
     @Column(name = "date_joined")
@@ -31,4 +34,9 @@ public class Employee {
 
     @Column(name = "status")
     private Boolean status;
+
+    @OneToOne(mappedBy = "employee",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
 }

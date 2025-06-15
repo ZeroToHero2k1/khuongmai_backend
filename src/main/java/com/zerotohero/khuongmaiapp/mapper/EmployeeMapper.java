@@ -17,6 +17,7 @@ public interface EmployeeMapper {
     default EmployeeResponse toEmployeeResponse(Employee employee){
         if (employee==null) return null;
         return EmployeeResponse.builder()
+                .id(employee.getId())
                 .name(employee.getName())
                 .phone(employee.getPhone())
                 .dateJoined(employee.getDateJoined())

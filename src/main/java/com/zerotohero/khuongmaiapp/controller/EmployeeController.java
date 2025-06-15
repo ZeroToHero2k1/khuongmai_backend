@@ -3,6 +3,7 @@ package com.zerotohero.khuongmaiapp.controller;
 import com.zerotohero.khuongmaiapp.dto.request.EmployeeCURequest;
 import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
 import com.zerotohero.khuongmaiapp.dto.response.EmployeeResponse;
+import com.zerotohero.khuongmaiapp.entity.Employee;
 import com.zerotohero.khuongmaiapp.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

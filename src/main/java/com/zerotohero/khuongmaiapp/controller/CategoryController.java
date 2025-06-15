@@ -30,7 +30,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<Category> createCategory(@PathVariable String id,@RequestBody CategoryRequest request){
+    public ApiResponse<Category> updateCategory(@PathVariable String id,@RequestBody CategoryRequest request){
         return ApiResponse.<Category>builder().result(categoryService.updateCategory(id,request)).build();
     }
 
