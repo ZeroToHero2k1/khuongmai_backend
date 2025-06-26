@@ -42,4 +42,9 @@ public class UserController {
         userService.deleteUser(id);
         return ApiResponse.<Void>builder().message("Đã xóa user thành công").build();
     }
+
+    @GetMapping("/myinfo")
+    public ApiResponse<UserResponse> getMyInfo(){
+        return ApiResponse.<UserResponse>builder().result(userService.getMyInfo()).build();
+    }
 }

@@ -2,6 +2,7 @@ package com.zerotohero.khuongmaiapp.controller;
 
 
 import com.zerotohero.khuongmaiapp.dto.request.RoleCURequest;
+import com.zerotohero.khuongmaiapp.dto.request.RolePermissionRequest;
 import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
 import com.zerotohero.khuongmaiapp.entity.Role;
 import com.zerotohero.khuongmaiapp.service.RoleService;
@@ -37,5 +38,10 @@ public class RoleController {
         Pageable pageable=PageRequest.of(page,limit);
         Page<Role> rolePage =roleService.searchRole(keyword,pageable);
         return ApiResponse.<List<Role>>builder().result(rolePage.getContent()).build();
+    }
+
+    @PutMapping("/{id}")
+    ApiResponse<Role> setPermissions(@PathVariable String id,@RequestBody RolePermissionRequest request){
+        return ApiResponse.<Role>builder().result(roleService.setPermissions(id,request)).build();
     }
 }

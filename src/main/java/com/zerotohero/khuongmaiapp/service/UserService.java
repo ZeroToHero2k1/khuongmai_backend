@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,14 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-
     public void deleteUser(String id){
         userRepository.deleteById(id);
+    }
+
+    public UserResponse getMyInfo(){
+        var context= SecurityContextHolder.getContext();
+        String name=context.getAuthentication().getName();
+
+        return userMapper.toUserResponse(userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND)));
     }
 }

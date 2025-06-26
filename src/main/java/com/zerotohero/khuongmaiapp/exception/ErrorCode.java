@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 @AllArgsConstructor
 public enum ErrorCode {
     ROLE_EXISTED(1001,"Đã tồn tại role này", HttpStatus.BAD_REQUEST),
+    PERMISSION_EXISTED(1001,"Đã tồn tại permission này", HttpStatus.BAD_REQUEST),
     CATEGORY_NAME_EXISTED(1001,"Đã tồn tại danh mục này", HttpStatus.BAD_REQUEST),
     STATUS_NAME_EXISTED(1001,"Đã tồn tại TRẠNG THÁI này", HttpStatus.BAD_REQUEST),
     DEPARTMENT_EXISTED(1002,"Đã tồn tại trụ sở này", HttpStatus.BAD_REQUEST),
@@ -29,7 +30,9 @@ public enum ErrorCode {
     CUSTOMER_NOT_FOUND(1234,"Không tồn tại khách hàng",HttpStatus.NOT_FOUND),
     WAREHOUSE_NOT_FOUND(1234,"Nhà kho không tồn tại",HttpStatus.NOT_FOUND),
     MATERIAL_NOT_FOUND(1234,"Không tồn tại vật liệu này",HttpStatus.NOT_FOUND),
-    STATUS_NOT_FOUND(1234,"Không tồn tại trạng thái này",HttpStatus.NOT_FOUND)
+    STATUS_NOT_FOUND(1234,"Không tồn tại trạng thái này",HttpStatus.NOT_FOUND),
+    UNAUTHENTICATE(1234,"Đăng nhập không thành công",HttpStatus.UNAUTHORIZED),
+    PERMISSION_NOT_FOUND(1234,"Không tìm thấy permission",HttpStatus.NOT_FOUND)
     ;
 
 
