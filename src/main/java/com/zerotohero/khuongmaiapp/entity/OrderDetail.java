@@ -1,5 +1,6 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     @ManyToOne
@@ -30,4 +32,7 @@ public class OrderDetail {
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
+
+    @ManyToOne
+    private Warehouse warehouse;
 }

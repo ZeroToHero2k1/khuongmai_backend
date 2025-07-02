@@ -64,7 +64,7 @@ public class AuthenticationService {
                 .subject(user.getUsername())
                 .issuer("khuongmaiapp.com")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(VALID_DURATION,ChronoUnit.MINUTES).toEpochMilli()))
+                .expirationTime(new Date(Instant.now().plus(VALID_DURATION,ChronoUnit.HOURS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope",buildScope(user))
                 .build();
@@ -110,9 +110,13 @@ public class AuthenticationService {
         SignedJWT signedJWT=SignedJWT.parse(token);
 
         Date expityTime=(isRefresh)//refresh=true thì sẽ cộng thêm thời hạn refresh đã quy ước trong yml
-                ?new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(REFRESHABLE_DURATION,ChronoUnit.MINUTES).toEpochMilli())
+                ?new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(REFRESHABLE_DURATION,ChronoUnit.HOURS).toEpochMilli())
                 :signedJWT.getJWTClaimsSet().getExpirationTime();
         var verified=signedJWT.verify(verifier);//kết quả kiểm tra chữ ký xác thực, kiểu boolean
+        //Token hết hạn
+        if (expityTime.before(new Date())) {
+            throw new KMAppException(ErrorCode.TOKEN_EXPIRED);
+        }
 
         if(!verified&&expityTime.after(new Date()))//còn hạn nhưng chữ ký không hợp lệ => lỗi
             throw new KMAppException(ErrorCode.UNAUTHENTICATE);

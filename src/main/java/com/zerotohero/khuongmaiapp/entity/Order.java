@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -34,4 +35,9 @@ public class Order {
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, // 👈 phải có dòng này!
+            orphanRemoval = true)
+    private List<OrderDetail> orderDetailList;
 }

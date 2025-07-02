@@ -32,7 +32,11 @@ public enum ErrorCode {
     MATERIAL_NOT_FOUND(1234,"Không tồn tại vật liệu này",HttpStatus.NOT_FOUND),
     STATUS_NOT_FOUND(1234,"Không tồn tại trạng thái này",HttpStatus.NOT_FOUND),
     UNAUTHENTICATE(1234,"Đăng nhập không thành công",HttpStatus.UNAUTHORIZED),
-    PERMISSION_NOT_FOUND(1234,"Không tìm thấy permission",HttpStatus.NOT_FOUND)
+    PERMISSION_NOT_FOUND(1234,"Không tìm thấy permission",HttpStatus.NOT_FOUND),
+    TOKEN_EXPIRED(1234,"Hết hạn token",HttpStatus.UNAUTHORIZED),
+    SOLD_OUT(1234,"Sản phẩm đã hết hàng",HttpStatus.NOT_FOUND),
+    ORDER_NOT_FOUND(1234,"Đơn hàng không tìm thấy",HttpStatus.NOT_FOUND),
+    NOT_ENOUGH(1234,"Không đủ hàng",HttpStatus.BAD_REQUEST)
     ;
 
 
