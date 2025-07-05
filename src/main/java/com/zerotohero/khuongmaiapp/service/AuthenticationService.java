@@ -94,6 +94,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
+        log.info("Signer key: {}",SIGNER_KEY);
         var user=userRepository.findByUsername(authenticationRequest.getUsername()).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND));
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         boolean authenticated=passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());

@@ -14,6 +14,7 @@ import com.zerotohero.khuongmaiapp.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,8 +32,8 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request){
-        if(userRepository.existsByUsername(request.getUsername()))
-            throw new KMAppException(ErrorCode.UNIQUE_USERNAME);
+//        if(userRepository.existsByUsername(request.getUsername()))
+//            throw new KMAppException(ErrorCode.UNIQUE_USERNAME);
         User user=userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         Employee employee=employeeRepository.findById(request.getEmployeeId()).orElseThrow(()->new KMAppException(ErrorCode.EMPLOYEE_NOT_FOUND));
@@ -40,6 +41,13 @@ public class UserService {
             throw new KMAppException(ErrorCode.UNIQUE_ACCOUNT);
         user.setEmployee(employee);
         user.setRole(roleRepository.findById(request.getRoleId()).orElseThrow(()->new KMAppException(ErrorCode.ROLE_NOT_FOUND)));
+
+        try {
+            user=userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new KMAppException(ErrorCode.UNIQUE_USERNAME);
+        }
+
         return userMapper.toUserResponse(userRepository.save(user));
     }
 

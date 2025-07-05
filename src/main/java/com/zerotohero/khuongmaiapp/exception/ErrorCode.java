@@ -36,7 +36,8 @@ public enum ErrorCode {
     TOKEN_EXPIRED(1234,"Hết hạn token",HttpStatus.UNAUTHORIZED),
     SOLD_OUT(1234,"Sản phẩm đã hết hàng",HttpStatus.NOT_FOUND),
     ORDER_NOT_FOUND(1234,"Đơn hàng không tìm thấy",HttpStatus.NOT_FOUND),
-    NOT_ENOUGH(1234,"Không đủ hàng",HttpStatus.BAD_REQUEST)
+    NOT_ENOUGH(1234,"Không đủ hàng",HttpStatus.BAD_REQUEST),
+    TASK_NOT_FOUND(1234,"Không tìm thấy task",HttpStatus.NOT_FOUND)
     ;
 
 
