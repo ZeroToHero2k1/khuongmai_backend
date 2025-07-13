@@ -1,4 +1,4 @@
 jwt:
-  signerKey: ${JWT_SIGNERKEY}
+  signerKey: ${JWT_SIGNERKEY:NkUOS3XREVZWGQ8/URTxcW2NjveSkBKioNkAmpbgNQBILtcz02p9wxz1/MYu8xvt}
   valid-duration: 10 #in hours
-  refreshable-duration: 120 #in hours
+  refreshable-duration: 20 #in hours

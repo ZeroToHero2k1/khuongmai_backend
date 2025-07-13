@@ -2,6 +2,7 @@ package com.zerotohero.khuongmaiapp.service;
 
 import com.zerotohero.khuongmaiapp.dto.request.UserCreationRequest;
 import com.zerotohero.khuongmaiapp.dto.request.UserUpdateRequest;
+import com.zerotohero.khuongmaiapp.dto.response.UpdateMyInfoResponse;
 import com.zerotohero.khuongmaiapp.dto.response.UserResponse;
 import com.zerotohero.khuongmaiapp.entity.Employee;
 import com.zerotohero.khuongmaiapp.entity.User;
@@ -72,10 +73,17 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserResponse getMyInfo(){
+    public UpdateMyInfoResponse getMyInfo(){
         var context= SecurityContextHolder.getContext();
         String name=context.getAuthentication().getName();
 
-        return userMapper.toUserResponse(userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND)));
+//        return userMapper.toUserResponse(userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND)));
+
+        User user=userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND));
+        Employee employee=employeeRepository.findByUser(user).orElseThrow(()->new KMAppException(ErrorCode.EMPLOYEE_NOT_FOUND));
+
+        return UpdateMyInfoResponse.builder()
+                .user(user)
+                .build();
     }
 }

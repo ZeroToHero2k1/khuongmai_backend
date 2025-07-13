@@ -39,4 +39,6 @@ public class Employee {
     @JsonIgnore
     private User user;
 
+    private String imageUrl;
+
 }

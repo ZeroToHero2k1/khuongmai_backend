@@ -1,22 +1,20 @@
 package com.zerotohero.khuongmaiapp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
-import com.zerotohero.khuongmaiapp.dto.request.AuthenticationRequest;
-import com.zerotohero.khuongmaiapp.dto.request.IntrospectRequest;
-import com.zerotohero.khuongmaiapp.dto.request.InvalidTokenRequest;
-import com.zerotohero.khuongmaiapp.dto.request.RefreshTokenRequest;
-import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
-import com.zerotohero.khuongmaiapp.dto.response.AuthenticationResponse;
-import com.zerotohero.khuongmaiapp.dto.response.IntrospectResponse;
+import com.zerotohero.khuongmaiapp.dto.request.*;
+import com.zerotohero.khuongmaiapp.dto.response.*;
 import com.zerotohero.khuongmaiapp.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 @RestController
@@ -25,6 +23,8 @@ import java.text.ParseException;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class AuthenticationController {
     AuthenticationService authenticationService;
+
+    ObjectMapper objectMapper;
 
     @PostMapping("/token")
     public ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
@@ -53,5 +53,17 @@ public class AuthenticationController {
                 .build();
     }
 
+    @PostMapping("/sign")
+    public ApiResponse<SignUpResponse> signUp(@Valid @RequestBody SignUpRequest request){
+        return ApiResponse.<SignUpResponse>builder()
+                .result(authenticationService.SignUp(request))
+                .build();
+    }
+
+    @PostMapping("/updateinfo")
+    public ApiResponse<UpdateMyInfoResponse> updateInfo(@RequestPart("myinfo") String requestJson,@RequestPart("image") MultipartFile file) throws IOException {
+        UpdateMyInfoRequest request=objectMapper.readValue(requestJson,UpdateMyInfoRequest.class);
+        return ApiResponse.<UpdateMyInfoResponse>builder().result(authenticationService.updateMyInfo(request,file)).build();
+    }
 
 }

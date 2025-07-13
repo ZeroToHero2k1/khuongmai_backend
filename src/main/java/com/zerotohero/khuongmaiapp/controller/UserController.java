@@ -3,6 +3,7 @@ package com.zerotohero.khuongmaiapp.controller;
 import com.zerotohero.khuongmaiapp.dto.request.UserCreationRequest;
 import com.zerotohero.khuongmaiapp.dto.request.UserUpdateRequest;
 import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
+import com.zerotohero.khuongmaiapp.dto.response.UpdateMyInfoResponse;
 import com.zerotohero.khuongmaiapp.dto.response.UserResponse;
 import com.zerotohero.khuongmaiapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/myinfo")
-    public ApiResponse<UserResponse> getMyInfo(){
-        return ApiResponse.<UserResponse>builder().result(userService.getMyInfo()).build();
+    public ApiResponse<UpdateMyInfoResponse> getMyInfo(){
+        return ApiResponse.<UpdateMyInfoResponse>builder().result(userService.getMyInfo()).build();
     }
 }
