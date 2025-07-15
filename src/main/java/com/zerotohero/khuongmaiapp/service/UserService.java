@@ -4,11 +4,13 @@ import com.zerotohero.khuongmaiapp.dto.request.UserCreationRequest;
 import com.zerotohero.khuongmaiapp.dto.request.UserUpdateRequest;
 import com.zerotohero.khuongmaiapp.dto.response.UpdateMyInfoResponse;
 import com.zerotohero.khuongmaiapp.dto.response.UserResponse;
+import com.zerotohero.khuongmaiapp.entity.Department;
 import com.zerotohero.khuongmaiapp.entity.Employee;
 import com.zerotohero.khuongmaiapp.entity.User;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
 import com.zerotohero.khuongmaiapp.mapper.UserMapper;
+import com.zerotohero.khuongmaiapp.repository.DepartmentRepository;
 import com.zerotohero.khuongmaiapp.repository.EmployeeRepository;
 import com.zerotohero.khuongmaiapp.repository.RoleRepository;
 import com.zerotohero.khuongmaiapp.repository.UserRepository;
@@ -30,6 +32,7 @@ public class UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     EmployeeRepository employeeRepository;
+    DepartmentRepository departmentRepository;
     PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request){
@@ -81,9 +84,11 @@ public class UserService {
 
         User user=userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND));
         Employee employee=employeeRepository.findByUser(user).orElseThrow(()->new KMAppException(ErrorCode.EMPLOYEE_NOT_FOUND));
+        Department department=employee.getDepartment();
 
         return UpdateMyInfoResponse.builder()
                 .user(user)
+                .departmentName(department==null?"Chưa chọn trụ sở":department.getName())
                 .build();
     }
 }

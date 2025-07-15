@@ -19,4 +19,6 @@ public class UpdateMyInfoRequest {
     @Pattern(regexp = "^[0-9]{10}$", message = "PHONE_INVALID")
     String phone;
 
+    String departmentName;
+
 }

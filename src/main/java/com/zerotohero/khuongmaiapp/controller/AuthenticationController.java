@@ -61,7 +61,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/updateinfo")
-    public ApiResponse<UpdateMyInfoResponse> updateInfo(@RequestPart("myinfo") String requestJson,@RequestPart("image") MultipartFile file) throws IOException {
+    public ApiResponse<UpdateMyInfoResponse> updateInfo(@RequestPart("myinfo") String requestJson,@RequestPart(value="image", required = false) MultipartFile file) throws IOException {
         UpdateMyInfoRequest request=objectMapper.readValue(requestJson,UpdateMyInfoRequest.class);
         return ApiResponse.<UpdateMyInfoResponse>builder().result(authenticationService.updateMyInfo(request,file)).build();
     }

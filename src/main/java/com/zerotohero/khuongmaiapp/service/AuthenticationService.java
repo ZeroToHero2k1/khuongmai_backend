@@ -15,10 +15,7 @@ import com.zerotohero.khuongmaiapp.entity.InvalidatedToken;
 import com.zerotohero.khuongmaiapp.entity.User;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
-import com.zerotohero.khuongmaiapp.repository.EmployeeRepository;
-import com.zerotohero.khuongmaiapp.repository.InvalidatedTokenRepository;
-import com.zerotohero.khuongmaiapp.repository.RoleRepository;
-import com.zerotohero.khuongmaiapp.repository.UserRepository;
+import com.zerotohero.khuongmaiapp.repository.*;
 import com.zerotohero.khuongmaiapp.validate.ValidateImage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +48,7 @@ public class AuthenticationService {
     InvalidatedTokenRepository invalidatedTokenRepository;
     EmployeeRepository employeeRepository;
     RoleRepository roleRepository;
+    DepartmentRepository departmentRepository;
     CloudinaryService cloudinaryService;
     ValidateImage validateImage;
 
@@ -103,6 +101,7 @@ public class AuthenticationService {
         Employee employee = employeeRepository.findByUser(user).orElseThrow(() -> new KMAppException(ErrorCode.EMPLOYEE_NOT_FOUND));
         employee.setName(request.getName());
         employee.setPhone(request.getPhone());
+        employee.setDepartment(departmentRepository.findByName(request.getDepartmentName()).orElseThrow(()-> new KMAppException(ErrorCode.DEPARTMENT_IS_NOT_EXISTED)));
 
         if (file != null) {
             validateImage.validateImageFile(file); // nếu lỗi sẽ ném exception luôn, không upload gì
@@ -125,6 +124,7 @@ public class AuthenticationService {
         employeeRepository.save(employee);
         return UpdateMyInfoResponse.builder()
                 .user(user)
+                .departmentName(employee.getDepartment().getName())
                 .build();
     }
 
