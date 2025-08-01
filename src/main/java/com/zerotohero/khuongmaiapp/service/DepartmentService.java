@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,13 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
+    public List<Department> findAllDepartment(){
+        return departmentRepository.findAll();
+    }
+
+    public Department findDepartmentById(String id){
+        return departmentRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.DEPARTMENT_IS_NOT_EXISTED));
+    }
 
     public Department updateDepartmentById(String id,DepartmentRequest request){
         Department department=departmentRepository.findById(id).orElseThrow(()->new KMAppException(ErrorCode.DEPARTMENT_IS_NOT_EXISTED));

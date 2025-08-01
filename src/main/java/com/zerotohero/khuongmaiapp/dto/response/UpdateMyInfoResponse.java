@@ -16,4 +16,5 @@ import lombok.experimental.FieldDefaults;
 public class UpdateMyInfoResponse {
     User user;
     String departmentName;
+    String roleName;
 }

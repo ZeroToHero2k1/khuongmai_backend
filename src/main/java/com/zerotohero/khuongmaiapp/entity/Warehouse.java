@@ -1,7 +1,10 @@
 package com.zerotohero.khuongmaiapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "warehouse")
@@ -23,5 +26,13 @@ public class Warehouse {
 
     @Column(name = "phone")
     private String phone;
+
+    @OneToMany(mappedBy = "fromWarehouse")
+    @JsonIgnore
+    private List<StockReceiptDetail> exportReceipts; // những phiếu xuất hoặc chuyển đi từ kho này
+
+    @OneToMany(mappedBy = "toWarehouse")
+    @JsonIgnore
+    private List<StockReceiptDetail> importReceipts; // những phiếu nhập hoặc chuyển đến kho này
 }
 

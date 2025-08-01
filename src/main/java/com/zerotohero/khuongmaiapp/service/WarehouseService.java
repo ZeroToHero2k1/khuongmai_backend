@@ -1,6 +1,7 @@
 package com.zerotohero.khuongmaiapp.service;
 
 import com.zerotohero.khuongmaiapp.dto.request.WarehouseRequest;
+import com.zerotohero.khuongmaiapp.dto.response.WarehouseResponse;
 import com.zerotohero.khuongmaiapp.entity.Warehouse;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
@@ -39,8 +40,19 @@ public class WarehouseService {
         warehouseRepository.deleteById(id);
     }
 
-    public Page<Warehouse> searchWarehouses(String kw, Pageable pageable){
-        return warehouseRepository.searchWarehouses(kw,pageable);
+    public Page<WarehouseResponse> searchWarehouses(String name, String managerName, String phone, Pageable pageable){
+        Page<Warehouse> warehousePage= warehouseRepository.searchWarehouses(name,managerName,phone,pageable);
+        return warehousePage.map(warehouse -> {
+            return WarehouseResponse.builder()
+                    .id(warehouse.getId())
+                    .name(warehouse.getName())
+                    .location(warehouse.getLocation())
+                    .phone(warehouse.getPhone())
+                    .managerName(warehouse.getManagerName())
+                    .existExportReceipts(warehouse.getExportReceipts() != null && !warehouse.getExportReceipts().isEmpty())
+                    .existImportReceipts(warehouse.getImportReceipts() != null && !warehouse.getImportReceipts().isEmpty())
+                    .build();
+        });
     }
 
 

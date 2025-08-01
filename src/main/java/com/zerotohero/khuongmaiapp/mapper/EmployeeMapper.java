@@ -2,6 +2,7 @@ package com.zerotohero.khuongmaiapp.mapper;
 
 import com.zerotohero.khuongmaiapp.dto.request.EmployeeCURequest;
 import com.zerotohero.khuongmaiapp.dto.response.EmployeeResponse;
+import com.zerotohero.khuongmaiapp.entity.Department;
 import com.zerotohero.khuongmaiapp.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,13 +17,17 @@ public interface EmployeeMapper {
 
     default EmployeeResponse toEmployeeResponse(Employee employee){
         if (employee==null) return null;
+
+        Department dept = employee.getDepartment();
         return EmployeeResponse.builder()
                 .id(employee.getId())
                 .name(employee.getName())
                 .phone(employee.getPhone())
                 .dateJoined(employee.getDateJoined())
                 .status(employee.getStatus())
-                .departmentName(employee.getDepartment().getName())
+                .departmentName(dept != null ? dept.getName() : null)
+                .departmentId(dept != null ? dept.getId() : null)
+                .imageUrl(employee.getImageUrl())
                 .build();
 
     }

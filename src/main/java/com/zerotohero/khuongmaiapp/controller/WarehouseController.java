@@ -3,10 +3,12 @@ package com.zerotohero.khuongmaiapp.controller;
 import com.zerotohero.khuongmaiapp.dto.request.CustomerRequest;
 import com.zerotohero.khuongmaiapp.dto.request.WarehouseRequest;
 import com.zerotohero.khuongmaiapp.dto.response.ApiResponse;
+import com.zerotohero.khuongmaiapp.dto.response.WarehouseResponse;
 import com.zerotohero.khuongmaiapp.entity.Customer;
 import com.zerotohero.khuongmaiapp.entity.Warehouse;
 import com.zerotohero.khuongmaiapp.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +27,14 @@ public class WarehouseController {
     }
 
     @GetMapping()
-    ApiResponse<List<Warehouse>> searchWarehouses(@RequestParam(defaultValue = "") String kw, @RequestParam(defaultValue = "0")int page){
+    ApiResponse<Page<WarehouseResponse>> searchWarehouses(@RequestParam(defaultValue = "") String name,
+                                                          @RequestParam(defaultValue = "") String managerName,
+                                                          @RequestParam(defaultValue = "") String phone,
+                                                          @RequestParam(defaultValue = "0")int page
+    ){
         int limit=10;
         Pageable pageable= PageRequest.of(page,limit);
-        return ApiResponse.<List<Warehouse>>builder().result(warehouseService.searchWarehouses(kw,pageable).getContent()).build();
+        return ApiResponse.<Page<WarehouseResponse>>builder().result(warehouseService.searchWarehouses(name,managerName,phone,pageable)).build();
     }
 
     @GetMapping("/{id}")
@@ -42,7 +48,7 @@ public class WarehouseController {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> delete(@PathVariable String id){
+    public ApiResponse<Void> deleteWarehouse(@PathVariable String id){
         warehouseService.deleteWarehouse(id);
         return ApiResponse.<Void>builder().message("Đã xóa thành công").build();
     }

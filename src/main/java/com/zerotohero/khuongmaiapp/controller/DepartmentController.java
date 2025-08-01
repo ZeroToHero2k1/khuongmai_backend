@@ -7,6 +7,7 @@ import com.zerotohero.khuongmaiapp.entity.Department;
 import com.zerotohero.khuongmaiapp.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -31,15 +32,25 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
-    ApiResponse<Department> updateDepartment(@RequestParam String id,@RequestBody DepartmentRequest request){
+    ApiResponse<Department> updateDepartment(@PathVariable String id,@Valid @RequestBody DepartmentRequest request){
         return ApiResponse.<Department>builder().result(departmentService.updateDepartmentById(id,request)).build();
     }
 
     @GetMapping()
-    ApiResponse<List<Department>> getDepartments(@RequestParam String keyword, @RequestParam(defaultValue = "0") int page){
+    ApiResponse<Page<Department>> getDepartments(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "0") int page){
         int limit=10;
         Pageable pageable= PageRequest.of(page,limit);
-        return ApiResponse.<List<Department>>builder().result(departmentService.getDepartments(keyword,pageable).getContent()).build();
+        return ApiResponse.<Page<Department>>builder().result(departmentService.getDepartments(keyword,pageable)).build();
+    }
+
+    @GetMapping("/getAll")
+    ApiResponse<List<Department>> findAll(){
+        return ApiResponse.<List<Department>>builder().result(departmentService.findAllDepartment()).build();
+    }
+
+    @GetMapping("/{id}")
+    ApiResponse<Department> findById(@PathVariable String id){
+        return ApiResponse.<Department>builder().result(departmentService.findDepartmentById(id)).build();
     }
 
 }

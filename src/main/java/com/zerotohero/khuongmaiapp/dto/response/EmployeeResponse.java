@@ -19,6 +19,8 @@ public class EmployeeResponse {
     private String name;
     private String phone;
     private String departmentName;
+    private String departmentId;
     private LocalDate dateJoined;
     private Boolean status;
+    private String imageUrl;
 }

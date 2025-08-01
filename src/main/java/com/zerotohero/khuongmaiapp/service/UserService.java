@@ -6,6 +6,7 @@ import com.zerotohero.khuongmaiapp.dto.response.UpdateMyInfoResponse;
 import com.zerotohero.khuongmaiapp.dto.response.UserResponse;
 import com.zerotohero.khuongmaiapp.entity.Department;
 import com.zerotohero.khuongmaiapp.entity.Employee;
+import com.zerotohero.khuongmaiapp.entity.Role;
 import com.zerotohero.khuongmaiapp.entity.User;
 import com.zerotohero.khuongmaiapp.exception.ErrorCode;
 import com.zerotohero.khuongmaiapp.exception.KMAppException;
@@ -85,10 +86,12 @@ public class UserService {
         User user=userRepository.findByUsername(name).orElseThrow(()->new KMAppException(ErrorCode.USER_NOT_FOUND));
         Employee employee=employeeRepository.findByUser(user).orElseThrow(()->new KMAppException(ErrorCode.EMPLOYEE_NOT_FOUND));
         Department department=employee.getDepartment();
+        Role role=user.getRole();
 
         return UpdateMyInfoResponse.builder()
                 .user(user)
                 .departmentName(department==null?"Chưa chọn trụ sở":department.getName())
+                .roleName(role==null?"Chưa xét quyền cho tài khoản":role.getRoleName())
                 .build();
     }
 }

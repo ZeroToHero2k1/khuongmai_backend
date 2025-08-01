@@ -125,6 +125,7 @@ public class AuthenticationService {
         return UpdateMyInfoResponse.builder()
                 .user(user)
                 .departmentName(employee.getDepartment().getName())
+                .roleName(user.getRole().getRoleName())
                 .build();
     }
 

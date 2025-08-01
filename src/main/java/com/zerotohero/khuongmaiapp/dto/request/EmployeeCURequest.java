@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class EmployeeCURequest {
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại phải có đúng 10 chữ số")
     private String phone;
     private String departmentId;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateJoined;
     @Builder.Default
     private Boolean status=true;
